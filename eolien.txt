@@ -1,0 +1,27 @@
+
+#TIMEHORIZON
+T = 8760;
+
+#NODE EOLIENNE
+#PARAMETERS
+capex = 50;// capital expenditure per unit capacity €/kW
+lifetime = 20; // annee
+facteur_charge = import "wind_capacity_factors.csv"; // [0,1]
+// comf = 1/100*capex;// €/kW/an
+// comv = 0.05;// €/kWh
+
+#VARIABLES
+internal: capacite; // kW
+external: production[T];// kWh
+
+#CONSTRAINTS
+capacite >= 0;
+production[t] >= 0;
+production[t] <= capacite * facteur_charge[t];
+
+#OBJECTIVES
+min:capex*capacite;
+
+
+
+
